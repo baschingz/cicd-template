@@ -65,17 +65,19 @@ jobs:
   trivy-scan:
     name: Container Security (Trivy)
     runs-on: ubuntu-latest
-    if: hashFiles('Dockerfile') != ''
     steps:
       - uses: actions/checkout@v4
       - run: docker build -t app:${{ github.sha }} .
+        if: hashFiles('Dockerfile') != ''
       - uses: aquasecurity/trivy-action@master
+        if: hashFiles('Dockerfile') != ''
         with:
           image-ref: "app:${{ github.sha }}"
           format: "sarif"
           output: "trivy-results.sarif"
           severity: "CRITICAL,HIGH"
       - uses: github/codeql-action/upload-sarif@v3
+        if: hashFiles('Dockerfile') != ''
         with:
           sarif_file: "trivy-results.sarif"
 
