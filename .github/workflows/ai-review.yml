@@ -49,11 +49,11 @@ jobs:
           script: |
             const https = require('https');
             const prompt = `You are a senior engineer doing a code review.
-## PR: ${process.env.PR_TITLE} by ${process.env.PR_AUTHOR}
-## Files changed:\n${process.env.FILES}
-## Diff:\n\`\`\`diff\n${process.env.DIFF}\n\`\`\`
-Review: 🐛 Bugs | 🔒 Security (OWASP) | ⚡ Performance | 🏗️ Architecture | ✅ Tests | 📖 Quality | 📋 Risk: LOW/MEDIUM/HIGH
-Summary in Thai, technical details in English. Cite file:line.`;
+            ## PR: ${process.env.PR_TITLE} by ${process.env.PR_AUTHOR}
+            ## Files changed:\n${process.env.FILES}
+            ## Diff:\n\`\`\`diff\n${process.env.DIFF}\n\`\`\`
+            Review: 🐛 Bugs | 🔒 Security (OWASP) | ⚡ Performance | 🏗️ Architecture | ✅ Tests | 📖 Quality | 📋 Risk: LOW/MEDIUM/HIGH
+            Summary in Thai, technical details in English. Cite file:line.`;
             const body = JSON.stringify({ model:'claude-opus-4-6', max_tokens:4096, messages:[{role:'user',content:prompt}] });
             const r = await new Promise((res,rej)=>{
               const req = https.request({
