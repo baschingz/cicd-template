@@ -28,12 +28,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Check for package.json
+        id: check
+        run: echo "exists=$([ -f package.json ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
       - uses: actions/setup-node@v4
+        if: steps.check.outputs.exists == 'true'
         with:
           node-version: 20
           cache: "npm"
       - run: npm ci
+        if: steps.check.outputs.exists == 'true'
       - run: npm audit --audit-level=high
+        if: steps.check.outputs.exists == 'true'
       - uses: github/ossar-action@v1
         id: ossar
       - uses: github/codeql-action/upload-sarif@v3
